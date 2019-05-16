@@ -13,14 +13,14 @@
     "url": "https://github.com/fifthbeat/react-typescript-boilerplate"
   },
   "scripts": {
-    "start": "webpack-dev-server --config internals/webpack/webpack.dev.js --mode development --hot --progress --color --port 3000",
+    "start": "webpack-dev-server --config internals/webpack/webpack.dev.js --mode development --hot --progress --color --port 3050",
     "build": "webpack --config internals/webpack/webpack.prod.js  --progress --colors",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "generate": "plop --plopfile internals/generators/index.js",
     "lint": "tslint -c tslint.json --fix './src/app/**.tsx' -t verbose"
   },
   "engines": {
-    "node": "11.x"
+    "node": "11.x || 10.x || 12.x "
   },
   "pre-commit": {
     "colors": true,
