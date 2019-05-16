@@ -3,7 +3,7 @@ var path = require('path');
 
 // variables
 var sourcePath = path.join(__dirname, '../../src');
-var outPath = path.join(__dirname, '../../dist');
+var outPath = path.join(__dirname, '../../build');
 
 // plugins
 var HtmlWebpackPlugin = require('html-webpack-plugin');

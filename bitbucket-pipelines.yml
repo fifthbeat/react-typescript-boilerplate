@@ -10,7 +10,7 @@ pipelines:
           - yarn lint
           - yarn build
         artifacts:
-          - dist/**
+          - build/**
 
   branches:
     master:
@@ -22,7 +22,7 @@ pipelines:
             - yarn lint
             - yarn build
           artifacts:
-            - dist/** # change this to your build directory
+            - build/** # change this to your build directory
       - step:
           name: Deploy to GCloud
           trigger: manual
