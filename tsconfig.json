@@ -6,6 +6,7 @@
     "module": "es6",
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "preserveConstEnums": true,
     "experimentalDecorators": false,
     "declaration": false,
