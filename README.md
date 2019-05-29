@@ -8,7 +8,7 @@
 
 This project is meant to handle fast production and easy maintenance, this is not an overall solution is a way for us for fasten our work and grant quality during all the development project.
 
-_Contributions_ and _feedbacks_ are wellcome. You can
+_Contributions_ and _feedbacks_ are welcome. You can
 
 ## How to run the engine
 
