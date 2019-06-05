@@ -20,7 +20,7 @@
     "lint": "tslint -c tslint.json --fix './src/app/**.tsx' -t verbose"
   },
   "engines": {
-    "node": ">=10.0"
+    "node": ">= 10.0"
   },
   "pre-commit": {
     "colors": true,

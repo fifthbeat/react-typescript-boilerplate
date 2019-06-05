@@ -22,7 +22,7 @@ yarn
 
 or if you have time to spare
 
-```bas
+```bash
 npm i
 ```
 
