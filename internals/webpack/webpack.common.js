@@ -1,13 +1,13 @@
-var webpack = require('webpack');
 var path = require('path');
 
 // variables
 var sourcePath = path.join(__dirname, '../../src');
-var outPath = path.join(__dirname, '../../build');
+var outPath = path.join(__dirname, '../../dist');
 
 // plugins
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   context: sourcePath,
@@ -21,29 +21,71 @@ module.exports = {
   target: 'web',
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
-    // Fix webpack's default behavior to not load packages with jsnext:main module
-    // (jsnext:main directs not usually distributable es6 format, but es6 sources)
     mainFields: ['module', 'browser', 'main'],
     alias: {
-      app: path.resolve(__dirname, '../../src/app/'),
-      beans: path.resolve(__dirname, '../../src/beans/'),
-      utils: path.resolve(__dirname, '../../src/utils/'),
-      constants: path.resolve(__dirname, '../../src/constants/')
+      app: path.resolve(__dirname, 'src/app/')
     }
   },
   module: {
     rules: [
-      // static assets
       {test: /\.html$/, use: 'html-loader'},
-      {test: /\.(svg)$/, use: 'url-loader?limit=10000'},
       {
-        test: /\.(jpe?g|png|gif|bmp|mp3|mp4|ogg|wav|eot|ttf|woff|woff2)$/,
-        use: {
-          options: {
-            name: '[name]_[hash].[ext]'
-          },
-          loader: 'file-loader'
-        }
+        test: /\.css$/,
+        use: [
+          {loader: MiniCssExtractPlugin.loader},
+          {loader: 'css-loader', options: {sourceMap: true}}
+        ]
+      },
+      {
+        test: /\.(svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 50000,
+              name: 'assets/svg/[name].[ext]',
+              mimetype: 'image/svg+xml'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/images/[name].[ext]',
+              mimetype: 'image/png'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff|woff2|ttf)$/,
+        loader: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10,
+              name: 'assets/fonts/[name].[ext]',
+              mimetype: 'font/woff2'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(eot)$/,
+        loader: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10,
+              name: 'assets/fonts/[name].[ext]',
+              mimetype: 'font/eot'
+            }
+          }
+        ]
       }
     ]
   },
@@ -53,7 +95,7 @@ module.exports = {
       cacheGroups: {
         commons: {
           chunks: 'initial',
-          minChunks: 2
+          minChunks: 8
         },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
@@ -62,31 +104,20 @@ module.exports = {
         }
       }
     },
-    runtimeChunk: true
+    runtimeChunk: false
   },
   plugins: [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-      DEBUG: false
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
     }),
     new WebpackCleanupPlugin(),
     new HtmlWebpackPlugin({
-      template: 'assets/index.html'
+      template: 'assets/index.html',
+      inject: true
     })
   ],
-  devServer: {
-    contentBase: sourcePath,
-    hot: true,
-    inline: true,
-    historyApiFallback: {
-      disableDotRule: true
-    },
-    stats: 'minimal',
-    clientLogLevel: 'warning'
-  },
   node: {
-    // workaround for webpack-dev-server issue
-    // https://github.com/webpack/webpack-dev-server/issues/60#issuecomment-103411179
     fs: 'empty',
     net: 'empty'
   }

@@ -1,61 +1,43 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+var path = require('path');
 
 // plugins
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var WorkboxPlugin = require('workbox-webpack-plugin');
+
+var outPath = path.join(__dirname, '../../dist');
 
 module.exports = merge(common, {
-  mode: 'development',
-  // https://webpack.js.org/configuration/devtool/
+  mode: 'production',
   devtool: 'hidden-source-map',
   output: {
-    chunkFilename: 'bundle.[chunkhash].js',
-    publicPath: 'assets/dist/'
+    publicPath: './',
+    filename: '[name].[hash:8].js',
+    path: outPath
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css'
+      filename: 'style.[hash:8].css'
     })
   ],
   module: {
     rules: [
-      // .ts, .tsx
       {
         test: /\.tsx?$/,
         use: ['ts-loader']
-      },
-      // css
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            query: {
-              modules: true,
-              sourceMap: false,
-              importLoaders: 1,
-              localIdentName: '[hash:base64:5]'
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: [
-                require('postcss-import')({addDependencyTo: webpack}),
-                require('postcss-url')(),
-                require('postcss-preset-env')({
-                  /* use stage 2 features (defaults) */
-                  stage: 2
-                }),
-                require('postcss-reporter')()
-              ]
-            }
-          }
-        ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
+      DEBUG: false
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true
+    })
+  ]
 });

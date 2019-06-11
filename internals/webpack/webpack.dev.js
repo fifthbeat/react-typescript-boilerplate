@@ -1,10 +1,12 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
+var path = require('path');
+
+var sourcePath = path.join(__dirname, '../../src');
 
 module.exports = merge(common, {
   mode: 'development',
-  // https://webpack.js.org/configuration/devtool/
   devtool: 'cheap-module-eval-source-map',
   output: {
     filename: 'bundle.js',
@@ -12,11 +14,6 @@ module.exports = merge(common, {
   },
   module: {
     rules: [
-      {
-        test: /\.(svg)$/,
-        use: 'url-loader?limit=10000'
-      },
-      // .ts, .tsx
       {
         test: /\.tsx?$/,
         use: [
@@ -26,39 +23,23 @@ module.exports = merge(common, {
           },
           'ts-loader'
         ]
-      },
-      // css
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            query: {
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[local]__[hash:base64:5]'
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: [
-                require('postcss-import')({addDependencyTo: webpack}),
-                require('postcss-url')(),
-                require('postcss-preset-env')({
-                  /* use stage 2 features (defaults) */
-                  stage: 2
-                }),
-                require('postcss-reporter')(),
-                require('postcss-browser-reporter')
-              ]
-            }
-          }
-        ]
       }
     ]
+  },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+      DEBUG: true
+    })
+  ],
+  devServer: {
+    contentBase: sourcePath,
+    hot: true,
+    inline: true,
+    historyApiFallback: {
+      disableDotRule: true
+    },
+    stats: 'minimal',
+    clientLogLevel: 'warning'
   }
 });
