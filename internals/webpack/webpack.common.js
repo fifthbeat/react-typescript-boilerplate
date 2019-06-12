@@ -23,7 +23,12 @@ module.exports = {
     extensions: ['.js', '.ts', '.tsx'],
     mainFields: ['module', 'browser', 'main'],
     alias: {
-      app: path.resolve(__dirname, 'src/app/')
+      app: path.resolve(__dirname, '../../src/app/'),
+      beans: path.resolve(__dirname, '../../src/beans/'),
+      utils: path.resolve(__dirname, '../../src/utils/'),
+      constants: path.resolve(__dirname, '../../src/constants/'),
+      assets: path.resolve(__dirname, '../../src/assets/'),
+      data: path.resolve(__dirname, '../../src/data/')
     }
   },
   module: {
