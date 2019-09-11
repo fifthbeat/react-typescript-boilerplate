@@ -30,6 +30,7 @@ export const update = async (url: string, data: object, options: object) =>
     })
     .catch((error) => {
       console.error(error);
+      throw new Error(error);
     });
 
 export const post = async (
@@ -46,6 +47,7 @@ export const post = async (
     })
     .catch((error) => {
       console.error(error);
+      throw new Error(error);
     });
 
 export const get = async (url: string, options: object) =>
@@ -58,6 +60,7 @@ export const get = async (url: string, options: object) =>
     })
     .catch((error) => {
       console.error(error);
+      throw new Error(error);
     });
 
 // INFO: Enable these to debug requests
