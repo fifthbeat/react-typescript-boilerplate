@@ -24,6 +24,9 @@ module.exports = {
     mainFields: ['module', 'browser', 'main'],
     alias: {
       app: path.resolve(__dirname, '../../src/app/'),
+      store: path.resolve(__dirname, '../../src/app/store'),
+      views: path.resolve(__dirname, '../../src/app/views'),
+      components: path.resolve(__dirname, '../../src/app/components'),
       beans: path.resolve(__dirname, '../../src/beans/'),
       utils: path.resolve(__dirname, '../../src/utils/'),
       constants: path.resolve(__dirname, '../../src/constants/'),
@@ -36,6 +39,13 @@ module.exports = {
       {test: /\.html$/, use: 'html-loader'},
       {
         test: /\.css$/,
+        use: [
+          {loader: MiniCssExtractPlugin.loader},
+          {loader: 'css-loader', options: {sourceMap: true}}
+        ]
+      },
+      {
+        test: /\.scss$/,
         use: [
           {loader: MiniCssExtractPlugin.loader},
           {loader: 'css-loader', options: {sourceMap: true}}

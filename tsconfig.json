@@ -20,6 +20,9 @@
     "baseUrl": "./src",
     "paths": {
       "app": ["./app/*"],
+      "store": ["./app/store"],
+      "views": ["./app/views"],
+      "components": ["./app/components"],
       "data": ["./data/*"],
       "assets": ["./assets/*"],
       "beans": ["./beans/*"],
