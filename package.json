@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-boilerplate",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Yet another boilerplate featuring: react, redux, sagas, typescript, styled-component ad lots of love",
   "main": "main.tsx",
   "author": {
@@ -25,7 +25,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint && yarn version --patch --no-commit-hooks --no-git-tag-version && git add .",
-      "pre-push": "yarn build && yarn version --minor --no-commit-hooks --no-git-tag-version && git add -A . && git commit --no-verify -m 'version number update'"
+      "pre-push": "yarn build && yarn version --minor --no-commit-hooks --no-git-tag-version && git add -A . && git commit --no-verify -m 'version number update'",
+      "post-push": "git push --no-verify"
     }
   },
   "license": "MIT",
