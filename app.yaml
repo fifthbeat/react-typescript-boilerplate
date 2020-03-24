@@ -15,7 +15,7 @@
 runtime: nodejs10
 
 handlers:
-  - url: /(.*\.(html|css|js|png|jpg|woff|json))
+- url: /(.*\.(html|css|js|png|jpg|woff|json))
     static_files: build/\1
     upload: build/(.*\.(html|css|js|png|jpg|woff|json))
   - url: /.*

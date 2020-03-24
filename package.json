@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-boilerplate",
-  "version": "1.1.0",
+  "version": "1.3.0",
   "description": "Yet another boilerplate featuring: react, redux, sagas, typescript, styled-component ad lots of love",
   "main": "main.tsx",
   "author": {
@@ -13,7 +13,7 @@
     "url": "https://github.com/fifthbeat/react-typescript-boilerplate"
   },
   "scripts": {
-    "start": "webpack-dev-server --config internals/webpack/webpack.dev.js --mode development --hot --progress --color --port 3000",
+    "start": "webpack-dev-server --config internals/webpack/webpack.dev.js --mode development --hot --progress --color --port 5000",
     "build": "webpack --config internals/webpack/webpack.prod.js  --progress --colors",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "generate": "plop --plopfile internals/generators/index.js",
@@ -22,12 +22,11 @@
   "engines": {
     "node": ">= 10.0"
   },
-  "pre-commit": {
-    "colors": true,
-    "silent": false,
-    "run": [
-      "lint"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn version --patch --no-commit-hooks --no-git-tag-version && git add .",
+      "pre-push": "yarn build && yarn version --minor --no-commit-hooks --no-git-tag-version && git add -A . && git commit --no-verify -m 'version number update'"
+    }
   },
   "license": "MIT",
   "devDependencies": {
@@ -48,6 +47,7 @@
     "file-loader": "^3.0.1",
     "html-loader": "^1.0.0-alpha.0",
     "html-webpack-plugin": "^4.0.0-alpha",
+    "husky": "^3.1.0",
     "mini-css-extract-plugin": "^0.4.4",
     "plop": "^2.1.0",
     "postcss": "^7.0.5",
@@ -57,7 +57,6 @@
     "postcss-preset-env": "^6.1.1",
     "postcss-reporter": "^6.0.0",
     "postcss-url": "^8.0.0",
-    "pre-commit": "^1.2.2",
     "prettier": "^1.14.3",
     "react-hot-loader": "^4.3.11",
     "redux-devtools-extension": "^2.13.5",
@@ -83,6 +82,7 @@
     "@types/styled-components": "^4.0.2",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "contentful": "^7.14.0",
     "normalize.css": "^8.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
