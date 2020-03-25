@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-boilerplate",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Yet another boilerplate featuring: react, redux, sagas, typescript, styled-component ad lots of love",
   "main": "main.tsx",
   "author": {
