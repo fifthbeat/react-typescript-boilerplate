@@ -80,7 +80,7 @@
     "@types/redux-saga": "^0.10.5",
     "@types/reselect": "^2.2.0",
     "@types/styled-components": "^4.0.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "contentful": "^7.14.0",
     "normalize.css": "^8.0.0",
